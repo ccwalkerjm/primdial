@@ -16,9 +16,39 @@
         
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript">
-            document.addEventListener("deviceready", function(){
-                    alert("bindo");
-                },true);
+            function onDeviceReady() {
+                //exit on backbutton
+                //document.addEventListener("backbutton", function (e) {
+                //    e.preventDefault();
+                //    navigator.app.exitApp();
+                //}, false);
+                alert("Device Ready");
+                //get server details
+                try {
+                    DeviceData.messagetype = MESSAGE_SERVER_DETAILS;
+                    $.ajax
+                       ({
+                           type: "POST",
+                           url: server_url,
+                           contentType: "application/json; charset=utf-8",
+                           dataType: "json",
+                           async: false,
+                           data: JSON.stringify(DeviceData),
+                           success: function (r) {
+                               alert("wrong return "+r.value);
+                               if (r.value == 0) {
+                                   InitPushNotification(r.message);
+                               }
+                           }
+                       });
+                }
+                catch (err) {
+                    txt = "There was an error on this page.\n\n";
+                    txt += "Error description: " + err.message + "\n\n";
+                    alert(txt);
+                }           
+            }
+            document.addEventListener('deviceready', onDeviceReady, true);
         </script>
         
         
