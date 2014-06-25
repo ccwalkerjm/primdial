@@ -11,7 +11,8 @@
     <author email="ccwalkerjm@gmail.com" href="https://github.com/ccwalkerjm/primpager2.git">
         Courtney Walker
     </author>
-
+    <icon src="icon.png" />
+    
     <!--
         If you do not want any permissions to be added to your app, add the
         following tag to your config.xml; you will still have the INTERNET
