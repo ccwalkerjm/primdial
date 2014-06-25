@@ -16,6 +16,32 @@
         
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript">
+            var pushNotification;
+            var sessionGuid;
+            var DeviceData = {
+                uuid: '',
+                platform: '',
+                version: '',
+                model: '',
+                registrationId: '',
+                messagetype: '',
+                ARN: '',
+                dateRegistered: '',
+                dateUpdated: '',
+                active: true,
+                pin: '',
+                username: '',
+                password: ''
+            };
+
+            var MESSAGE_VERIFYTYPE = 0;
+            var MESSAGE_PASSWORDAUTHENTICATION = 1;
+            var MESSAGE_PINAUTHENTICATION = 2;
+            var MESSAGE_SERVER_DETAILS = 3;
+            var base_url = 'http://primdial.com';
+            var server_url = 'http://primdial.com/api/smartDevice/';
+            
+            //Device Ready Event        
             function onDeviceReady() {
                 //exit on backbutton
                 //document.addEventListener("backbutton", function (e) {
