@@ -42,7 +42,7 @@
         var MESSAGE_PINAUTHENTICATION = 2;
         var MESSAGE_SERVER_DETAILS = 3;
         var base_url = 'http://primdial.com';
-        var server_url = 'http://primdial.com/api/smartDevice/';
+        var push_api_url = 'http://primdial.com/api/smartDevice/';
 
 
 
@@ -58,7 +58,7 @@
                 DeviceData.messagetype = MESSAGE_SERVER_DETAILS;
                 $.ajax({
                     type: "POST",
-                    url: server_url,
+                    url: push_api_url,
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     async: false,
@@ -104,7 +104,7 @@
 
             $.ajax({
                 type: "POST",
-                url: server_url,
+                url: push_api_url,
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 async: false,
@@ -135,7 +135,7 @@
             try {
                 $.ajax({
                     type: "POST",
-                    url: server_url,
+                    url: push_api_url,
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     async: false,
@@ -171,7 +171,7 @@
             try {
                 $.ajax({
                     type: "POST",
-                    url: server_url,
+                    url: push_api_url,
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     async: false,
