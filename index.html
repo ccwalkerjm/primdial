@@ -265,8 +265,8 @@
             $("#callDialog").html(getlineheader(idx)).append(getcallcontent());
             setCallSelect(-1);
             $("#linkpage").popup("open");
-        }       
-                
+        }
+
 
          //hangup call
         function hangup() {
@@ -423,7 +423,10 @@
             $('#lines').append('</tbody');
         };
 
-
+        $("#toggle_otp").click(function () {
+            $("#nootp").toggle();
+            $("#otp").toggle();
+        });
 
         document.addEventListener('deviceready', onDeviceReady, true);
     </script>
@@ -443,7 +446,7 @@
                     <h3>PIN Authentication</h3>
                     <input id="pin" type="password" />
                     <br />
-                    <input id="pinBtn" type="button" value="Submit"  data-role="button" data-inline="true" data-theme="b"  onclick="validatePin()" />
+                    <input id="pinBtn" type="button" value="Submit" data-role="button" data-inline="true" data-theme="b" onclick="validatePin()" />
                 </div>
                 <div id="passwordDiv" style="display:none">
                     <h3>Device not linked. Submit Username/password to link device</h3>
@@ -452,31 +455,43 @@
                     <br />Password:
                     <input id="password" type="password" />
                     <br />
-                    <input id="passwordBtn" type="button" value="Submit"  data-role="button" data-inline="true" data-theme="b"  onclick="linkDevice()" />
+                    <input id="passwordBtn" type="button" value="Submit" data-role="button" data-inline="true" data-theme="b" onclick="linkDevice()" />
                 </div>
             </div>
 
             <!--Pager Section-->
             <div id="messaging" style="display:none">
-                <h2>Live Status</h2>  
-                <h3 class="ui-bar ui-bar-a">
+                <h2>Live Status</h2> 
+
+                <div class="ui-corner-all custom-corners">
+                    <h3 class="ui-bar ui-bar-a">
                     Active Calls
                 </h3>
-                <div class="ui-body">                   
-                    <table id="calls"></table>
+                    <div class="ui-body  ui-body-a">
+                        <table id="calls"></table>
+                    </div>
                 </div>
-                <h3 class="ui-bar ui-bar-a">
+
+                <div class="ui-corner-all custom-corners">
+                    <h3 class="ui-bar ui-bar-a">
                     Pickup Phone(s)
                 </h3>
-                <div class="ui-body">    
-                    Access Code: <span id="otp"></span>
-                    <table id="lines"></table>
+                    <div class="ui-body  ui-body-a">
+                        <p>
+                            Access Code: <span id="otp" style="display:none"></span><span id="nootp">XXXX</span>
+                            <button id="toggle_otp" class="ui-btn ui-btn-inline">Toggle</button>
+                        </p>
+                        <table id="lines"></table>
+                        
+                        <p>
+                            <label for="txtphone">Pickup Phone:</label>
+                            <input id="txtphone" name="txtphone" type="text" value="" placeholder="Pickup Phone No" />
+                            <a href="#" id="btnaddphone" class="ui-shadow ui-btn ui-corner-all ui-btn-inline ui-btn-b ui-mini" onclick="addPhone()">Register</a>
+                        </p>
+                        
+                    </div>
                 </div>
-                <h3 class="ui-bar ui-bar-a">Register Pickup Phone</h3>
-                <<div class="ui-body">                      
-                    <input id="txtphone" name="txtphone" type="text" value="" />
-                    <input type="button" id="btnaddphone" value="Register" data-role="button" data-inline="true" data-theme="b" onclick="addPhone()" />
-                </div>
+
             </div>
             <!--Action Popup-->
             <div id="linkpage" data-role="popup" data-dismissible="false">
@@ -505,7 +520,7 @@
         </div>
     </div>
 
-    
+
 
 
 </body>
