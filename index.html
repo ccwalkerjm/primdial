@@ -254,20 +254,14 @@
         function callLink(idx) {
             $("#callDialog").html(getcallheader(idx)).append(getcallcontent());
             setCallSelect(idx);
-            $.mobile.changePage("#linkpage", {
-                transition: 'pop',
-                role: 'dialog'
-            });
+            $("#linkpage").popup("open");
         }
 
 
         function lineLink(idx) {
             $("#callDialog").html(getlineheader(idx)).append(getcallcontent());
             setCallSelect(-1);
-            $.mobile.changePage("#linkpage", {
-                transition: 'pop',
-                role: 'dialog'
-            });
+            $("#linkpage").popup("open");
         }
 
          //hangup call
@@ -276,7 +270,7 @@
             var actionUrl = base_url + "/pager/hangupcall/" + connid + "/?guid=" + sessionGuid;
             $.post(actionUrl, function (r) {
                 displayMessage(r.errormessage, r.errorcode < 0);
-                $.mobile.changePage("#mainPage");
+                $("#linkpage").popup("close");
             });
 
         }
@@ -289,7 +283,7 @@
             var actionUrl = base_url + "/pager/doBridgeCall/?mn=" + connid + "&sel=" + sel + "&li=" + phoneid + "&guid=" + sessionGuid;
             $.post(actionUrl, function (r) {
                 displayMessage(r.errormessage, r.errorcode < 0);
-                $.mobile.changePage("#mainPage");
+                $("#linkpage").popup("close");
             });
         }
 
@@ -301,7 +295,7 @@
             var actionUrl = base_url + "/pager/doBridgeCall/?mn=" + connid + "&new=" + newnum + "&li=" + phoneid + "&guid=" + sessionGuid;
             $.post(actionUrl, function (r) {
                 displayMessage(r.errormessage, r.errorcode < 0);
-                $.mobile.changePage("#mainPage");
+                $("#linkpage").popup("close");
             });
         }
 
@@ -487,6 +481,14 @@
                 </div>
 
             </div>
+            <div id="linkpage" data-role="popup">
+                <div data-role="header">
+                    <h1>Call Action</h1>
+                </div>
+                <div data-role="content">
+                    <div id="callDialog"></div>
+                </div>
+            </div>
             <!--End Pager Section-->
         </div>
 
@@ -504,14 +506,7 @@
         </div>
     </div>
 
-    <div id="linkpage" data-role="page">
-        <div data-role="header">
-            <h1>Call Action</h1>
-        </div>
-        <div data-role="content">
-            <div id="callDialog"></div>
-        </div>
-    </div>
+    
 
 
 </body>
