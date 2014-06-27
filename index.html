@@ -262,7 +262,8 @@
             $("#callDialog").html(getlineheader(idx)).append(getcallcontent());
             setCallSelect(-1);
             $("#linkpage").popup("open");
-        }
+        }       
+                
 
          //hangup call
         function hangup() {
@@ -322,7 +323,7 @@
             });
             var callheader = '<span>Current Call: </span><input id="callid" type="hidden" value="' +
                 connid + '"/><span><b>' + num + '</b></span>' +
-                '<br/><input id="hangup" type="button" value="hangup" onclick="hangup()" />'
+                '<br/><input id="hangup" type="button"  data-role="button" data-inline="true" data-theme="b" value="hangup" onclick="hangup()" />'
             return callheader;
         }
 
@@ -344,7 +345,7 @@
                 phoneid + '"/><span><input id="callid" type="hidden" value="' +
                 connid + '"/><span><b>' + num + '</b></span>';
             if (parseInt(connid) > 0) {
-                lineheader = lineheader + '<br/><input id="hangup" type="button" value="hangup" onclick="hangup()" />';
+                lineheader = lineheader + '<br/><input id="hangup" type="button" data-role="button" data-inline="true" data-theme="b" value="hangup" onclick="hangup()" />';
             }
             return lineheader;
         }
@@ -352,8 +353,8 @@
          //add dropdown box and text box for the active calls and new call
         function getcallcontent() {
             var tb = $('<table/>').addClass("calllist").attr('data-role', 'table').attr('data-mode', 'reflow');
-            var rw1 = '<tr id="callrow"><td>Select Call</td><td><div id="callselect"></div></td><td><input class="linkcall" id="linkcall" onclick="linkcall()" type="button" value="Link" /></td></tr>';
-            var rw2 = '<tr><td>Party No.</td><td><input id="txtmakecall" type="text" /></td><td><input class="makecall" id="makecall" onclick="makecall()" type="button" value="Link" /></td></tr>';
+            var rw1 = '<tr id="callrow"><td>Select Call</td><td><div id="callselect"></div></td><td><input class="linkcall" id="linkcall"  data-role="button" data-inline="true" data-theme="b" onclick="linkcall()" type="button" value="Link" /></td></tr>';
+            var rw2 = '<tr><td>Party No.</td><td><input id="txtmakecall" type="text" /></td><td><input class="makecall" id="makecall"  data-role="button" data-inline="true" data-theme="b" onclick="makecall()" type="button" value="Link" /></td></tr>';
             tb.append(rw1).append(rw2);
             return tb;
         }
@@ -439,7 +440,7 @@
                     <h3>PIN Authentication</h3>
                     <input id="pin" type="password" />
                     <br />
-                    <input id="pinBtn" type="button" value="Submit" onclick="validatePin()" />
+                    <input id="pinBtn" type="button" value="Submit"  data-role="button" data-inline="true" data-theme="b"  onclick="validatePin()" />
                 </div>
                 <div id="passwordDiv" style="display:none">
                     <h3>Device not linked. Submit Username/password to link device</h3>
@@ -448,7 +449,7 @@
                     <br />Password:
                     <input id="password" type="password" />
                     <br />
-                    <input id="passwordBtn" type="button" value="Submit" onclick="linkDevice()" />
+                    <input id="passwordBtn" type="button" value="Submit"  data-role="button" data-inline="true" data-theme="b"  onclick="linkDevice()" />
                 </div>
             </div>
 
@@ -481,7 +482,9 @@
                 </div>
 
             </div>
-            <div id="linkpage" data-role="popup">
+            <!--Action Popup-->
+            <div id="linkpage" data-role="popup" data-dismissible="false">
+                <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
                 <div data-role="header">
                     <h1>Call Action</h1>
                 </div>
