@@ -326,7 +326,7 @@
             });
             var callheader = '<span>Current Call: </span><input id="callid" type="hidden" value="' +
                 connid + '"/><span><b>' + num + '</b></span>' +
-                '<br/><input id="hangup" type="button"  data-role="button" data-inline="true" data-theme="b" value="hangup" onclick="hangup()" />'
+                '<br/><input id="hangup" type="button"  data-role="button" data-inline="true" data-theme="a" value="hangup" onclick="hangup()" />'
             return callheader;
         }
 
@@ -348,7 +348,7 @@
                 phoneid + '"/><span><input id="callid" type="hidden" value="' +
                 connid + '"/><span><b>' + num + '</b></span>';
             if (parseInt(connid) > 0) {
-                lineheader = lineheader + '<br/><input id="hangup" type="button" data-role="button" data-inline="true" data-theme="b" value="hangup" onclick="hangup()" />';
+                lineheader = lineheader + '<br/><input id="hangup" type="button" data-role="button" data-inline="true" data-theme="a" value="hangup" onclick="hangup()" />';
             }
             return lineheader;
         }
@@ -356,8 +356,8 @@
          //add dropdown box and text box for the active calls and new call
         function getcallcontent() {
             var tb = $('<table/>').addClass("calllist");
-            var rw1 = '<tr id="callrow"><td>Select Call</td><td><div id="callselect"></div></td><td><input class="linkcall" id="linkcall"  data-role="button" data-inline="true" data-theme="b" onclick="linkcall()" type="button" value="Link" /></td></tr>';
-            var rw2 = '<tr><td>Party No.</td><td><input id="txtmakecall" type="text" /></td><td><input class="makecall" id="makecall"  data-role="button" data-inline="true" data-theme="b" onclick="makecall()" type="button" value="Link" /></td></tr>';
+            var rw1 = '<tr id="callrow"><td>Select Call</td><td><div id="callselect"></div></td><td><input class="linkcall" id="linkcall"  data-role="button" data-inline="true" data-theme="a" onclick="linkcall()" type="button" value="Link" /></td></tr>';
+            var rw2 = '<tr><td>Party No.</td><td><input id="txtmakecall" type="text" /></td><td><input class="makecall" id="makecall"  data-role="button" data-inline="true" data-theme="a" onclick="makecall()" type="button" value="Link" /></td></tr>';
             tb.append(rw1).append(rw2);
             return tb;
         }
@@ -423,16 +423,16 @@
             $('#lines').append('</tbody');
         };
 
-        $("#toggle_otp").click(function () {
+        function toggleOTP() {
             $("#nootp").toggle();
             $("#otp").toggle();
-        });
+        }
 
         document.addEventListener('deviceready', onDeviceReady, true);
     </script>
 
 
-    <div data-role="page" data-theme="b" id="mainPage">
+    <div data-role="page" data-theme="a" id="mainPage">
         <div data-role="header">
             <h1>PrimDial Pager</h1>
         </div>
@@ -446,7 +446,7 @@
                     <h3>PIN Authentication</h3>
                     <input id="pin" type="password" />
                     <br />
-                    <input id="pinBtn" type="button" value="Submit" data-role="button" data-inline="true" data-theme="b" onclick="validatePin()" />
+                    <input id="pinBtn" type="button" value="Submit" data-role="button" data-inline="true" data-theme="a" onclick="validatePin()" />
                 </div>
                 <div id="passwordDiv" style="display:none">
                     <h3>Device not linked. Submit Username/password to link device</h3>
@@ -455,7 +455,7 @@
                     <br />Password:
                     <input id="password" type="password" />
                     <br />
-                    <input id="passwordBtn" type="button" value="Submit" data-role="button" data-inline="true" data-theme="b" onclick="linkDevice()" />
+                    <input id="passwordBtn" type="button" value="Submit" data-role="button" data-inline="true" data-theme="a" onclick="linkDevice()" />
                 </div>
             </div>
 
@@ -479,15 +479,24 @@
                     <div class="ui-body  ui-body-a">
                         <p>
                             Access Code: <span id="otp" style="display:none"></span><span id="nootp">XXXX</span>
-                            <button id="toggle_otp" class="ui-btn ui-btn-inline">Toggle</button>
+                            <button id="toggle_otp" class="ui-btn ui-btn-inline" onclick="toggleOTP()">Toggle</button>
                         </p>
                         <table id="lines"></table>
 
-                        <p>
-                            <label for="txtphone">Pickup Phone:</label>
-                            <input id="txtphone" name="txtphone" type="text" value="" placeholder="Pickup Phone No" />
-                            <a href="#" id="btnaddphone" class="ui-shadow ui-btn ui-corner-all ui-btn-inline ui-btn-b ui-mini" onclick="addPhone()">Register</a>
-                        </p>
+                        <hr/>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <label for="txtphone">Pickup Phone:</label>
+                                    </td>
+                                    <td>
+                                        <input id="txtphone" name="txtphone" type="text" value="" placeholder="Pickup Phone No" />
+                                    </td>
+                                    <td> <a href="#" id="btnaddphone" class="ui-shadow ui-btn ui-corner-all ui-btn-inline ui-btn-b ui-mini" onclick="addPhone()">Register</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        
 
                     </div>
                 </div>
