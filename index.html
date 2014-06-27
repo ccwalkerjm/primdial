@@ -355,7 +355,7 @@
 
          //add dropdown box and text box for the active calls and new call
         function getcallcontent() {
-            var tb = $('<table/>').addClass("calllist").attr('data-role', 'table').attr('data-mode', 'reflow');
+            var tb = $('<table/>').addClass("calllist");
             var rw1 = '<tr id="callrow"><td>Select Call</td><td><div id="callselect"></div></td><td><input class="linkcall" id="linkcall"  data-role="button" data-inline="true" data-theme="b" onclick="linkcall()" type="button" value="Link" /></td></tr>';
             var rw2 = '<tr><td>Party No.</td><td><input id="txtmakecall" type="text" /></td><td><input class="makecall" id="makecall"  data-role="button" data-inline="true" data-theme="b" onclick="makecall()" type="button" value="Link" /></td></tr>';
             tb.append(rw1).append(rw2);
