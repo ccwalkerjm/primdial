@@ -458,32 +458,25 @@
 
             <!--Pager Section-->
             <div id="messaging" style="display:none">
-                <h2>Live Status</h2>
-                <div data-role="collapsible" data-mini="true" data-iconpos="right" data-theme="a" data-content-theme="c">
-                    <h3>Generated PIN</h3>
-                    <p><span id="otp">blank</span>
-                    </p>
+                <h2>Live Status</h2>  
+                <h3 class="ui-bar ui-bar-a">
+                    Active Calls
+                </h3>
+                <div class="ui-body">                   
+                    <table id="calls"></table>
                 </div>
-
-                <div class="ui-body ui-body-c">
-                    <h3>
-                        Active Calls
-                    </h3>
-                    <table id="calls" class="table" data-role="table" data-mode="reflow"></table>
+                <h3 class="ui-bar ui-bar-a">
+                    Pickup Phone(s)
+                </h3>
+                <div class="ui-body">    
+                    Access Code: <span id="otp"></span>
+                    <table id="lines"></table>
                 </div>
-                <div class="ui-body ui-body-b">
-                    <h3>
-                        Pickup Phone(s)
-                    </h3>
-                    <table id="lines" class="table" data-role="table" data-mode="reflow"></table>
-
-                </div>
-                <div class="ui-body ui-body-c">
-                    <h3>Register Pickup Phone</h3>
+                <h3 class="ui-bar ui-bar-a">Register Pickup Phone</h3>
+                <<div class="ui-body">                      
                     <input id="txtphone" name="txtphone" type="text" value="" />
                     <input type="button" id="btnaddphone" value="Register" data-role="button" data-inline="true" data-theme="b" onclick="addPhone()" />
                 </div>
-
             </div>
             <!--Action Popup-->
             <div id="linkpage" data-role="popup" data-dismissible="false">
