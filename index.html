@@ -309,12 +309,11 @@
             var actionUrl = base_url + "/pager/addPickupPhone/" + $("#txtphone").val() + "/?guid=" + sessionGuid;
             $.post(actionUrl, function (r) {
                 displayMessage(r.errormessage, r.errorcode < 0);
-                $("#txtphone").val(phtext);
                 $("#registerPhone").popup("close");
             });
         }
 
-         //add call header
+         //add call header 
         function getcallheader(cur_idx) {
             var connid = "";
             var num = "";
