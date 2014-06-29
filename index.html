@@ -48,6 +48,13 @@
         var push_api_url = 'http://primdial.com/api/smartDevice/';
 
 
+        function startLoading(msgText) {
+            $.mobile.loading("show", {
+                text: msgText,
+                textVisible: true,
+                textonly: false
+            });
+        }
 
          //Device Ready Event        
         function onDeviceReady() {
@@ -57,8 +64,10 @@
             //    navigator.app.exitApp();
             //}, false);
             //get server details
+
             try {
                 DeviceData.messagetype = MESSAGE_SERVER_DETAILS;
+                startLoading("Connecting to Server!");
                 $.ajax({
                     type: "POST",
                     url: push_api_url,
@@ -73,6 +82,7 @@
                     }
                 });
             } catch (err) {
+                $.mobile.loading("hide");
                 txt = "There was an error on this page.\n\n";
                 txt += "Error description: " + err.message + "\n\n";
                 alert(txt);
@@ -121,10 +131,12 @@
                         //$("#pinDiv").show();
                         break;
                     case MESSAGE_PASSWORDAUTHENTICATION:
+                        $.mobile.loading("hide");
                         $("#loading").hide();
                         $("#passwordDiv").show();
                         break;
                     default:
+                        $.mobile.loading("hide");
                         $("#loading").html("Not connecting to Server! Please close and try again later!")
                         break;
                     }
@@ -144,6 +156,7 @@
                     async: false,
                     data: JSON.stringify(DeviceData),
                     success: function (r) {
+                        $.mobile.loading("hide");
                         if (r.error == false) {
                             sessionGuid = r.message;
                             setobjects(r.data);
@@ -438,10 +451,7 @@
         </div>
         <div data-role="content">
 
-            <div id="startup">
-                <div id="loading">
-                    Please Wait. loading........
-                </div>
+            <div id="startup">               
                 <div id="pinDiv" style="display:none">
                     <h3>PIN Authentication</h3>
                     <input id="pin" type="password" />
