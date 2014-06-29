@@ -482,22 +482,9 @@
                             <a href="#" id="toggle_otp" onclick="toggleOTP()">Toggle</a>
                         </p>
                         <table id="lines"></table>
-
                         <p>
-                            <table>
-                                <tr>
-                                    <td>
-                                        <label for="txtphone">Pickup Phone:</label>
-                                    </td>
-                                    <td>
-                                        <input id="txtphone" name="txtphone" type="text" value="" placeholder="Pickup Phone No" />
-                                    </td>
-                                    <td> <a href="#" id="btnaddphone" class="ui-shadow ui-btn ui-corner-all ui-btn-inline ui-btn-b ui-mini" onclick="addPhone()">Register</a>
-                                    </td>
-                                </tr>
-                            </table>
+                            <a href="#registerPhone" data-rel="popup" class="ui-btn ui-corner-all ui-shadow ui-btn-inline" data-transition="pop">Register Pickup Phone</a>
                         </p>
-
                     </div>
                 </div>
 
@@ -510,6 +497,17 @@
                 </div>
                 <div data-role="content">
                     <div id="callDialog"></div>
+                </div>
+            </div>
+            <!--Action Popup-->
+            <div id="registerPhone" data-role="popup" data-dismissible="false">
+                <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+                <div data-role="header">
+                    <h1>Register Pickup Phone</h1>
+                </div>
+                <div data-role="content">
+                    <input id="txtphone" name="txtphone" type="text" value="" placeholder="Pickup Phone No" />
+                    <a href="#" id="btnaddphone" class="ui-shadow ui-btn ui-corner-all ui-btn-inline ui-btn-b ui-mini" onclick="addPhone()">Register</a>
                 </div>
             </div>
             <!--End Pager Section-->
