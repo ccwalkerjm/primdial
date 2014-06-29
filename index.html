@@ -310,6 +310,7 @@
             $.post(actionUrl, function (r) {
                 displayMessage(r.errormessage, r.errorcode < 0);
                 $("#txtphone").val(phtext);
+                $("#registerPhone").popup("close");
             });
         }
 
@@ -499,11 +500,11 @@
                     <div id="callDialog"></div>
                 </div>
             </div>
-            <!--Action Popup-->
+            <!--Register Phone Popup-->
             <div id="registerPhone" data-role="popup" data-dismissible="false">
                 <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
                 <div data-role="header">
-                    <h1>Register Pickup Phone</h1>
+                    <h1>Add Pickup Phone</h1>
                 </div>
                 <div data-role="content">
                     <input id="txtphone" name="txtphone" type="text" value="" placeholder="Pickup Phone No" />
@@ -526,10 +527,6 @@
             </div>
         </div>
     </div>
-
-
-
-
 </body>
 
 </html>
