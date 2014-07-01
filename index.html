@@ -221,9 +221,6 @@
             case 'registered':
                 if (e.regid.length > 0) {
                     initDevice(e.regid);
-                    // Your GCM push server needs to know the regID before it can push to this device
-                    // here is where you might want to send it the regID for later use.
-                    console.log("regID = " + e.regid);
                 }
                 break;
 
@@ -447,11 +444,12 @@
 
     <div data-role="page" data-theme="a" id="mainPage">
         <div data-role="header">
-            <h1>PrimDial Pager</h1>
+            <img border="0" src="icon.png" alt="PrimDial" style="float:left;display:inline" />
+            <h1>Pager</h1>
         </div>
         <div data-role="content">
 
-            <div id="startup">               
+            <div id="startup">
                 <div id="pinDiv" style="display:none">
                     <h3>PIN Authentication</h3>
                     <input id="pin" type="password" />
@@ -471,7 +469,6 @@
 
             <!--Pager Section-->
             <div id="messaging" style="display:none">
-                <h2>Switch Board</h2> 
 
                 <div class="ui-corner-all custom-corners">
                     <div class="ui-bar ui-bar-a">
@@ -481,7 +478,7 @@
                         <table id="calls"></table>
                     </div>
                 </div>
-
+                <br/>
                 <div class="ui-corner-all custom-corners">
                     <div class="ui-bar ui-bar-a">
                         <h3>Pickup Phone(s)</h3>
