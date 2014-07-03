@@ -42,7 +42,7 @@
         var MESSAGE_PASSWORDAUTHENTICATION = 1;
         var MESSAGE_PINAUTHENTICATION = 2;
         var MESSAGE_SERVER_DETAILS = 3;
-        var base_url = 'http://primdial.com';
+        var dial_url = 'http://primdial.com/api/dial/';
         var push_api_url = 'http://primdial.com/api/smartDevice/';
 
 
@@ -79,7 +79,7 @@
 
             } catch (err) {
                 $.mobile.loading("hide");
-                errorHandle(err.message);
+                errorHandler(err.message);
             }
         }
 
@@ -93,7 +93,7 @@
                     "ecb": "onNotification"
                 });
             } catch (err) {
-                errorHandle(err.message);
+                errorHandler(err.message);
             }
         }
 
@@ -158,7 +158,7 @@
                     }
                 });
             } catch (err) {
-                errorHandle(err.message);
+                errorHandler(err.message);
             }
         }
 
@@ -193,7 +193,7 @@
                     }
                 });
             } catch (err) {
-                errorHandle(err.message);
+                errorHandler(err.message);
             }
         }
 
@@ -264,11 +264,23 @@
          //hangup call
         function hangup() {
             var connid = $("#callid").val();
-            var actionUrl = base_url + "/pager/hangupcall/" + connid + "/?guid=" + sessionGuid;
-            $.post(actionUrl, function (r) {
-                displayMessage(r.errormessage, r.errorcode < 0);
-                $("#linkpage").popup("close");
+
+            $.ajax({
+                type: "DELETE",
+                url: dial_url + '/' + connid,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,
+                crossDomain: true,
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('Authorization', "Basic " + btoa('device' + ':' + sessionGuid));
+                },
+                success: function () {
+                    $("#linkpage").popup("close");
+                }
+
             });
+
 
         }
 
@@ -277,11 +289,30 @@
             var connid = $("#callid").val();
             var phoneid = $("#lineid").val();
             var sel = $("#linkcallid").val();
-            var actionUrl = base_url + "/pager/doBridgeCall/?mn=" + connid + "&sel=" + sel + "&li=" + phoneid + "&guid=" + sessionGuid;
-            $.post(actionUrl, function (r) {
-                displayMessage(r.errormessage, r.errorcode < 0);
-                $("#linkpage").popup("close");
+            var callData = {
+                'mainId': connid,
+                'partyId': sel,
+                'phoneId': phoneid,
+                'partyNum': ''
+            };
+            $.ajax({
+                type: "POST",
+                url: dial_url,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,
+                data: JSON.stringify(callData),
+                crossDomain: true,
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('Authorization', "Basic " + btoa('device' + ':' + sessionGuid));
+                },
+                success: function () {
+                    $("#linkpage").popup("close");
+                }
+
             });
+
+
         }
 
          //make a call
@@ -289,20 +320,50 @@
             var connid = $("#callid").val();
             var newnum = $("#txtmakecall").val();
             var phoneid = $("#lineid").val();
-            var actionUrl = base_url + "/pager/doBridgeCall/?mn=" + connid + "&new=" + newnum + "&li=" + phoneid + "&guid=" + sessionGuid;
-            $.post(actionUrl, function (r) {
-                displayMessage(r.errormessage, r.errorcode < 0);
-                $("#linkpage").popup("close");
+
+            var callData = {
+                'mainId': connid,
+                'partyId': 0,
+                'phoneId': phoneid,
+                'partyNum': newnum
+            };
+            $.ajax({
+                type: "POST",
+                url: dial_url,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,
+                data: JSON.stringify(callData),
+                crossDomain: true,
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('Authorization', "Basic " + btoa('device' + ':' + sessionGuid));
+                },
+                success: function () {
+                    $("#linkpage").popup("close");
+                }
+
             });
+
         }
 
 
          //add pickup phone
         function addPhone() {
-            var actionUrl = base_url + "/pager/addPickupPhone/" + $("#txtphone").val() + "/?guid=" + sessionGuid;
-            $.post(actionUrl, function (r) {
-                displayMessage(r.errormessage, r.errorcode < 0);
-                $("#registerPhone").popup("close");
+            var phoneNo = $("#txtphone").val();
+            $.ajax({
+                type: "PUT",
+                url: dial_url + '/' + phoneNo,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: false,
+                crossDomain: true,
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('Authorization', "Basic " + btoa('device' + ':' + sessionGuid));
+                },
+                success: function () {
+                    $("#linkpage").popup("close");
+                }
+
             });
         }
 
@@ -312,7 +373,7 @@
             var num = "";
             $("tr.call").each(function (index) {
                 if (cur_idx == index) {
-                    $this = $(this);
+                    var $this = $(this);
                     connid = $this.find(".connid").text();
                     num = $this.find(".phone").html();
                 }
@@ -331,7 +392,7 @@
             var num = "";
             $("tr.line").each(function (index) {
                 if (cur_idx == index) {
-                    $this = $(this);
+                    var $this = $(this);
                     connid = $this.find(".connid").text();
                     phoneid = $this.find(".phoneid").text();
                     num = $this.find(".phone").html();
@@ -364,7 +425,7 @@
             $("tr.call").each(function (index) {
                 if (cur_idx != index) {
                     areCallsAvailable = true;
-                    $this = $(this);
+                    var $this = $(this);
                     var connid = $this.find(".connid").text();
                     var num = $this.find(".phone").html();
                     $('<option />', {
