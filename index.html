@@ -35,9 +35,7 @@
             dateRegistered: '',
             dateUpdated: '',
             active: true,
-            pin: '',
-            username: '',
-            password: ''
+            pin: ''
         };
 
         var MESSAGE_VERIFYTYPE = 0;
@@ -68,24 +66,20 @@
             try {
                 DeviceData.messagetype = MESSAGE_SERVER_DETAILS;
                 startLoading("Connecting to Server!");
+
                 $.ajax({
-                    type: "POST",
                     url: push_api_url,
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    async: false,
-                    data: JSON.stringify(DeviceData),
                     success: function (r) {
                         if (r.value == 0) {
                             InitPushNotification(r.message);
                         }
-                    }
+                    },
+                    async: false
                 });
+
             } catch (err) {
                 $.mobile.loading("hide");
-                txt = "There was an error on this page.\n\n";
-                txt += "Error description: " + err.message + "\n\n";
-                alert(txt);
+                errorHandle(err.message);
             }
         }
 
@@ -99,9 +93,7 @@
                     "ecb": "onNotification"
                 });
             } catch (err) {
-                txt = "There was an error on this page.\n\n";
-                txt += "Error description: " + err.message + "\n\n";
-                alert(txt);
+                errorHandle(err.message);
             }
         }
 
@@ -114,20 +106,14 @@
             DeviceData.registrationId = registrationId;
             DeviceData.messagetype = MESSAGE_VERIFYTYPE;
 
-
             $.ajax({
-                type: "POST",
-                url: push_api_url,
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                async: false,
-                data: JSON.stringify(DeviceData),
+                url: push_api_url + "/" + device.uuid,
                 success: function (r) {
                     switch (r.value) {
                     case MESSAGE_PINAUTHENTICATION:
                         $("#loading").hide();
                         $("#pin").val('0000');
-                        validatePin();
+                        validateDevice();
                         //$("#pinDiv").show();
                         break;
                     case MESSAGE_PASSWORDAUTHENTICATION:
@@ -140,11 +126,14 @@
                         $("#loading").html("Not connecting to Server! Please close and try again later!")
                         break;
                     }
-                }
-            })
+                },
+                async: false
+            });
+
+
         }
 
-        function validatePin() {
+        function validateDevice() {
             DeviceData.messagetype = MESSAGE_PINAUTHENTICATION;
             DeviceData.pin = $("#pin").val();
             try {
@@ -166,32 +155,31 @@
                         } else {
                             errorHandler(r.message);
                         }
-                    },
-                    error: function (xhr, textStatus, errorThrown) {
-                        errorHandler(textStatus);
                     }
                 });
             } catch (err) {
-                txt = "There was an error on this page.\n\n";
-                txt += "Error description: " + err.message + "\n\n" + JSON.stringify(DeviceData);
-                alert(txt);
+                errorHandle(err.message);
             }
         }
 
          //link device
         function linkDevice() {
             DeviceData.messagetype = MESSAGE_PASSWORDAUTHENTICATION;
-            DeviceData.username = $("#username").val();
-            DeviceData.password = $("#password").val();
+            var username = $("#username").val();
+            var password = $("#password").val();
 
             try {
                 $.ajax({
-                    type: "POST",
+                    type: "PUT",
                     url: push_api_url,
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     async: false,
                     data: JSON.stringify(DeviceData),
+                    crossDomain: true,
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader('Authorization', "Basic " + btoa(username + ':' + password));
+                    },
                     success: function (r) {
                         if (r.error == false) {
                             sessionGuid = r.message;
@@ -202,15 +190,10 @@
                         } else {
                             errorHandler(r.message);
                         }
-                    },
-                    error: function (xhr, textStatus, errorThrown) {
-                        errorHandler(textStatus);
                     }
                 });
             } catch (err) {
-                txt = "There was an error on this page.\n\n";
-                txt += "Error description: " + err.message + "\n\n" + JSON.stringify(DeviceData);
-                alert(txt);
+                errorHandle(err.message);
             }
         }
 
@@ -225,22 +208,22 @@
                 break;
 
             case 'message':
-                if (e.foreground) {
-                    var soundfile = e.soundname || e.payload.sound;
-                    // if the notification contains a soundname, play it.
-                    var my_media = new Media("/android_asset/www/" + soundfile);
-                    my_media.play();
-                } else { // otherwise we were launched because the user touched a notification in the notification tray.
-                    if (e.coldstart) {}
-                }
+                //if (e.foreground) {
+                var soundfile = e.soundname || e.payload.sound;
+                // if the notification contains a soundname, play it.
+                var my_media = new Media("/android_asset/www/" + soundfile);
+                my_media.play();
+                //    } else { // otherwise we were launched because the user touched a notification in the notification tray.
+                //      if (e.coldstart) {}
+                //        }
                 setobjects(e.payload);
                 successHandler("Message Received"); //e.payload.msg1
                 break;
             case 'error':
-                errorHandler('ERROR -> MSG:' + e.msg);
+                errorHandler(e.msg);
                 break;
             default:
-                errorHandler('ERROR -> UNKNOWN MSG:');
+                errorHandler('UNKNOWN MSG:');
                 break;
             }
         }
@@ -454,7 +437,7 @@
                     <h3>PIN Authentication</h3>
                     <input id="pin" type="password" />
                     <br />
-                    <input id="pinBtn" type="button" value="Submit" data-role="button" data-inline="true" data-theme="a" onclick="validatePin()" />
+                    <input id="pinBtn" type="button" value="Submit" data-role="button" data-inline="true" data-theme="a" onclick="validateDevice()" />
                 </div>
                 <div id="passwordDiv" style="display:none">
                     <h3>Device not linked. Submit Username/password to link device</h3>
